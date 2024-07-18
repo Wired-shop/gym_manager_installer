@@ -78,7 +78,9 @@ Name: "{autodesktop}\{#MyAppName}"; Filename: "{app}\main.exe"; Tasks: desktopic
 
 ; Installa MariaDB solo se non è già installato
 Filename: "msiexec.exe"; Parameters: "/i ""{app}\mariadb\mariadb.msi"" /quiet"; Flags: waituntilterminated; Check: not IsMariaDBInstalled()
-Filename: "C:\Program Files\MariaDB 10.4\bin\mysqld.exe"; Parameters: "--install"; Flags: runhidden waituntilterminated; Check: not IsMariaDBInstalled()
+
+; Installa MariaDB come servizio
+Filename: "C:\Program Files\MariaDB 10.4\bin\mysqld.exe"; Parameters: "--install"; Flags: runhidden waituntilterminated;
 
 ; Setup e Avvio MariaDB
 Filename: "{cmd}"; Parameters: "/c sc start MySQL"; Flags: runhidden waituntilterminated;
