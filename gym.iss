@@ -58,10 +58,10 @@ Source: "C:\Users\Patrick Nicolosi\Desktop\Lavoro\gym_manager_installer\live_mon
 Source: "C:\Users\Patrick Nicolosi\Desktop\Lavoro\gym_manager_installer\live_monitor\*"; DestDir: "{app}\live_monitor"; Flags: ignoreversion
 Source: "C:\Users\Patrick Nicolosi\Desktop\Lavoro\gym_manager_installer\gym_manager\data\*"; DestDir: "{app}\data"; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: "C:\Users\Patrick Nicolosi\Desktop\Lavoro\gym_manager_installer\gym_manager\*"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Users\Patrick Nicolosi\Desktop\Lavoro\gym_manager_installer\mariadb.msi"; DestDir: "{app}\mariadb"; Flags: ignoreversion; Check: not IsMariaDBInstalled()
+Source: "C:\Users\Patrick Nicolosi\Desktop\Lavoro\gym_manager_installer\mariadb\mariadb.msi"; DestDir: "{app}\mariadb"; Flags: ignoreversion; Check: not IsMariaDBInstalled()
 Source: "C:\Users\Patrick Nicolosi\Desktop\Lavoro\gym_manager_installer\nssm\*"; DestDir: "{app}\nssm"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "C:\Users\Patrick Nicolosi\Desktop\Lavoro\gym_manager_installer\api.exe"; DestDir: "{app}\api"; Flags: ignoreversion
-Source: "C:\Users\Patrick Nicolosi\Desktop\Lavoro\gym_manager_installer\access_control_server.exe"; DestDir: "{app}\access_control_server"; Flags: ignoreversion
+Source: "C:\Users\Patrick Nicolosi\Desktop\Lavoro\gym_manager_installer\backend\*"; DestDir: "{app}\backend"; Flags: ignoreversion
+Source: "C:\Users\Patrick Nicolosi\Desktop\Lavoro\gym_manager_installer\access_control_server\access_control_server.exe"; DestDir: "{app}\access_control_server"; Flags: ignoreversion
 
 [Registry]
 Root: HKA; Subkey: "Software\Classes\{#MyAppAssocExt}\OpenWithProgids"; ValueType: string; ValueName: "{#MyAppAssocKey}"; ValueData: ""; Flags: uninsdeletevalue
@@ -87,15 +87,15 @@ Filename: "{cmd}"; Parameters: "/c sc start MySQL"; Flags: runhidden waituntilte
 Filename: "C:\Program Files\MariaDB 10.4\bin\mysql.exe"; Parameters: "-u root -P 3306 -e ""ALTER USER 'root'@'localhost' IDENTIFIED BY ''; CREATE USER 'gymManagerUser'@'localhost' IDENTIFIED BY 'gymManagerWS'; GRANT ALL PRIVILEGES ON *.* TO 'gymManagerUser'@'localhost' WITH GRANT OPTION; FLUSH PRIVILEGES; CREATE DATABASE Gym_manager;"""; Flags: waituntilterminated
 
 ;Installa i servizi
-Filename: "{app}\nssm\win64\nssm.exe"; Parameters: "install GymManagerApi ""{app}\api\api.exe"""; Flags: waituntilterminated;
+Filename: "{app}\nssm\win64\nssm.exe"; Parameters: "install GymManagerBackend ""{app}\backend\backend.exe"""; Flags: waituntilterminated;
 Filename: "{app}\nssm\win64\nssm.exe"; Parameters: "install GymManagerAccessControlServer ""{app}\access_control_server\access_control_server.exe"""; Flags: waituntilterminated; 
-Filename: "{app}\nssm\win64\nssm.exe"; Parameters: "start GymManagerApi"; Flags: waituntilterminated; 
+Filename: "{app}\nssm\win64\nssm.exe"; Parameters: "start GymManagerBackend"; Flags: waituntilterminated; 
 Filename: "{app}\nssm\win64\nssm.exe"; Parameters: "start GymManagerAccessControlServer"; Flags: waituntilterminated; 
 
 [UninstallRun]
 ;Stoppa ed elimina i servizi
-Filename: "{cmd}"; Parameters: "/c sc stop GymManagerApi"; Flags: runhidden waituntilterminated; 
+Filename: "{cmd}"; Parameters: "/c sc stop GymManagerBackend"; Flags: runhidden waituntilterminated; 
 Filename: "{cmd}"; Parameters: "/c sc stop GymManagerAccessControlServer"; Flags: runhidden waituntilterminated; 
-Filename: "{cmd}"; Parameters: "/c sc delete GymManagerApi"; Flags: runhidden waituntilterminated; 
+Filename: "{cmd}"; Parameters: "/c sc delete GymManagerBackend"; Flags: runhidden waituntilterminated; 
 Filename: "{cmd}"; Parameters: "/c sc delete GymManagerAccessControlServer"; Flags: runhidden waituntilterminated; 
 Filename: "taskkill"; Parameters: "/f /im main.exe"; Flags: runhidden waituntilterminated
