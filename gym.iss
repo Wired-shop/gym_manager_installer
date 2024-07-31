@@ -1,7 +1,7 @@
 #define MyAppName "Gym Manager"
 #define MyAppVersion "1.0.0"
 #define MyAppPublisher "Wired-Shop"
-#define MyAppURL "https://www.example.com/"
+#define MyAppURL "https://wired-shop.com/"
 #define MyAppExeName "GymManager-Setup.exe"
 #define MyAppAssocName MyAppName + " File"
 #define MyAppAssocExt ".myp"
