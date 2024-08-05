@@ -17,8 +17,8 @@ procedure BeforeInstall();
 var
   ResultCode: Integer;
 begin
-  ShellExec('', 'cmd.exe', '/c sc stop GymManagerApi', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
-  ShellExec('', 'cmd.exe', '/c sc delete GymManagerApi', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
+  ShellExec('', 'cmd.exe', '/c sc stop GymManagerBackend', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
+  ShellExec('', 'cmd.exe', '/c sc delete GymManagerBackend', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
   
   ShellExec('', 'cmd.exe', '/c sc stop GymManagerAccessControlServer', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
   ShellExec('', 'cmd.exe', '/c sc delete GymManagerAccessControlServer', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
