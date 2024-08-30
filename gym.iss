@@ -1,5 +1,5 @@
 #define MyAppName "Gym Manager"
-#define MyAppVersion "1.0.0"
+#define MyAppVersion "2.0.0"
 #define MyAppPublisher "Wired-Shop"
 #define MyAppURL "https://wired-shop.com/"
 #define MyAppExeName "GymManager-Setup.exe"
@@ -54,14 +54,16 @@ Name: "italian"; MessagesFile: "compiler:Languages\Italian.isl"
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 
 [Files]
-Source: "C:\Users\Patrick Nicolosi\Desktop\Lavoro\gym_manager_installer\live_monitor\data\*"; DestDir: "{app}\live_monitor\data"; Flags: ignoreversion recursesubdirs createallsubdirs; BeforeInstall: BeforeInstall
-Source: "C:\Users\Patrick Nicolosi\Desktop\Lavoro\gym_manager_installer\live_monitor\*"; DestDir: "{app}\live_monitor"; Flags: ignoreversion
-Source: "C:\Users\Patrick Nicolosi\Desktop\Lavoro\gym_manager_installer\gym_manager\data\*"; DestDir: "{app}\data"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "C:\Users\Patrick Nicolosi\Desktop\Lavoro\gym_manager_installer\gym_manager\*"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Users\Patrick Nicolosi\Desktop\Lavoro\gym_manager_installer\mariadb\mariadb.msi"; DestDir: "{app}\mariadb"; Flags: ignoreversion; Check: not IsMariaDBInstalled()
-Source: "C:\Users\Patrick Nicolosi\Desktop\Lavoro\gym_manager_installer\nssm\*"; DestDir: "{app}\nssm"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "C:\Users\Patrick Nicolosi\Desktop\Lavoro\gym_manager_installer\backend\*"; DestDir: "{app}\backend"; Flags: ignoreversion
-Source: "C:\Users\Patrick Nicolosi\Desktop\Lavoro\gym_manager_installer\access_control_server\access_control_server.exe"; DestDir: "{app}\access_control_server"; Flags: ignoreversion
+Source: "live_monitor\data\*"; DestDir: "{app}\live_monitor\data"; Flags: ignoreversion recursesubdirs createallsubdirs; BeforeInstall: BeforeInstall
+Source: "live_monitor\*"; DestDir: "{app}\live_monitor"; Flags: ignoreversion
+Source: "data_converter\data\*"; DestDir: "{app}\data_converter\data";Flags: ignoreversion recursesubdirs createallsubdirs; BeforeInstall: BeforeInstall
+Source: "data_converter\*"; DestDir: "{app}\data_converter\"; Flags: ignoreversion
+Source: "gym_manager\data\*"; DestDir: "{app}\data"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "gym_manager\*"; DestDir: "{app}"; Flags: ignoreversion
+Source: "mariadb\mariadb.msi"; DestDir: "{app}\mariadb"; Flags: ignoreversion; Check: not IsMariaDBInstalled()
+Source: "nssm\*"; DestDir: "{app}\nssm"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "backend\*"; DestDir: "{app}\backend"; Flags: ignoreversion
+Source: "access_control_server\access_control_server.exe"; DestDir: "{app}\access_control_server"; Flags: ignoreversion
 
 [Registry]
 Root: HKA; Subkey: "Software\Classes\{#MyAppAssocExt}\OpenWithProgids"; ValueType: string; ValueName: "{#MyAppAssocKey}"; ValueData: ""; Flags: uninsdeletevalue
