@@ -1,5 +1,5 @@
 #define MyAppName "Gym Manager"
-#define MyAppVersion "2.3.1"
+#define MyAppVersion "2.4.0"
 #define MyAppPublisher "Wired-Shop"
 #define MyAppURL "https://wired-shop.com/"
 #define MyAppExeName "GymManager-Setup.exe"
@@ -23,7 +23,10 @@ begin
   ShellExec('', 'cmd.exe', '/c sc stop GymManagerAccessControlServer', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
   ShellExec('', 'cmd.exe', '/c sc delete GymManagerAccessControlServer', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
   
-  ShellExec('', 'taskkill.exe', '/f /im main.exe', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
+  ShellExec('', 'cmd.exe', '/c sc stop GymManagerBackupManager', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
+  ShellExec('', 'cmd.exe', '/c sc delete GymManagerBackupManager', '', SW_HIDE, ewWaitUntilTerminated, ResultCode); 
+  
+  ShellExec('', 'taskkill.exe', '/f /im gym_manager.exe', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
 end;
 
 
@@ -41,7 +44,7 @@ ArchitecturesAllowed=x64compatible
 ArchitecturesInstallIn64BitMode=x64compatible
 ChangesAssociations=yes
 DisableProgramGroupPage=yes
-OutputBaseFilename=mysetup
+OutputBaseFilename={#MyAppVersion}
 Compression=lzma
 SolidCompression=yes
 PrivilegesRequired=admin
@@ -56,13 +59,13 @@ Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{
 [Files]
 Source: "live_monitor\data\*"; DestDir: "{app}\live_monitor\data"; Flags: ignoreversion recursesubdirs createallsubdirs; BeforeInstall: BeforeInstall
 Source: "live_monitor\*"; DestDir: "{app}\live_monitor"; Flags: ignoreversion
-Source: "data_converter\data\*"; DestDir: "{app}\data_converter\data";Flags: ignoreversion recursesubdirs createallsubdirs; BeforeInstall: BeforeInstall
-Source: "data_converter\*"; DestDir: "{app}\data_converter\"; Flags: ignoreversion
+Source: "certificates\*"; DestDir: "{app}\certificates\"; Flags: ignoreversion
 Source: "gym_manager\data\*"; DestDir: "{app}\data"; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: "gym_manager\*"; DestDir: "{app}"; Flags: ignoreversion
 Source: "mariadb\mariadb.msi"; DestDir: "{app}\mariadb"; Flags: ignoreversion; Check: not IsMariaDBInstalled()
 Source: "nssm\*"; DestDir: "{app}\nssm"; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: "backend\*"; DestDir: "{app}\backend"; Flags: ignoreversion
+Source: "backup_manager\*"; DestDir: "{app}\backup_manager"; Flags: ignoreversion
 Source: "access_control_server\access_control_server.exe"; DestDir: "{app}\access_control_server"; Flags: ignoreversion
 Source: "whatsapp_sender_api\api\*"; DestDir: "{app}\whatsapp_sender_api\api"; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: "whatsapp_sender_api\updater\*"; DestDir: "{app}\whatsapp_sender_api\updater"; Flags: ignoreversion recursesubdirs createallsubdirs
@@ -75,8 +78,8 @@ Root: HKA; Subkey: "Software\Classes\{#MyAppAssocKey}\shell\open\command"; Value
 Root: HKA; Subkey: "Software\Classes\Applications\{#MyAppExeName}\SupportedTypes"; ValueType: string; ValueName: ".myp"; ValueData: ""
 
 [Icons]
-Name: "{autoprograms}\{#MyAppName}"; Filename: "{app}\main.exe"
-Name: "{autodesktop}\{#MyAppName}"; Filename: "{app}\main.exe"; Tasks: desktopicon
+Name: "{autoprograms}\{#MyAppName}"; Filename: "{app}\gym_manager.exe"
+Name: "{autodesktop}\{#MyAppName}"; Filename: "{app}\gym_manager.exe"; Tasks: desktopicon
 
 [Run]
 
@@ -93,13 +96,17 @@ Filename: "C:\Program Files\MariaDB 10.4\bin\mysql.exe"; Parameters: "-u root -P
 ;Installa i servizi
 Filename: "{app}\nssm\win64\nssm.exe"; Parameters: "install GymManagerBackend ""{app}\backend\backend.exe"""; Flags: waituntilterminated;
 Filename: "{app}\nssm\win64\nssm.exe"; Parameters: "install GymManagerAccessControlServer ""{app}\access_control_server\access_control_server.exe"""; Flags: waituntilterminated; 
+Filename: "{app}\nssm\win64\nssm.exe"; Parameters: "install GymManagerBackupManager ""{app}\backup_manager\backup_manager.exe"""; Flags: waituntilterminated; 
 Filename: "{app}\nssm\win64\nssm.exe"; Parameters: "start GymManagerBackend"; Flags: waituntilterminated; 
 Filename: "{app}\nssm\win64\nssm.exe"; Parameters: "start GymManagerAccessControlServer"; Flags: waituntilterminated; 
+Filename: "{app}\nssm\win64\nssm.exe"; Parameters: "start GymManagerBackupManager"; Flags: waituntilterminated; 
 
 [UninstallRun]
 ;Stoppa ed elimina i servizi
 Filename: "{cmd}"; Parameters: "/c sc stop GymManagerBackend"; Flags: runhidden waituntilterminated; 
 Filename: "{cmd}"; Parameters: "/c sc stop GymManagerAccessControlServer"; Flags: runhidden waituntilterminated; 
-Filename: "{cmd}"; Parameters: "/c sc delete GymManagerBackend"; Flags: runhidden waituntilterminated; 
+Filename: "{cmd}"; Parameters: "/c sc stop GymManagerBackupManager"; Flags: runhidden waituntilterminated; 
+Filename: "{cmd}"; Parameters: "/c sc delete GymManagerBackend"; Flags: runhidden waituntilterminated;
 Filename: "{cmd}"; Parameters: "/c sc delete GymManagerAccessControlServer"; Flags: runhidden waituntilterminated; 
-Filename: "taskkill"; Parameters: "/f /im main.exe"; Flags: runhidden waituntilterminated
+Filename: "{cmd}"; Parameters: "/c sc delete GymManagerBackupManager"; Flags: runhidden waituntilterminated; 
+Filename: "taskkill"; Parameters: "/f /im gym_manager.exe"; Flags: runhidden waituntilterminated
