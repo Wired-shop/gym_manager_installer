@@ -1,5 +1,5 @@
 #define MyAppName "Gym Manager"
-#define MyAppVersion "2.4.0"
+#define MyAppVersion "2.5.2"
 #define MyAppPublisher "Wired-Shop"
 #define MyAppURL "https://wired-shop.com/"
 #define MyAppExeName "GymManager-Setup.exe"
@@ -100,6 +100,9 @@ Filename: "{app}\nssm\win64\nssm.exe"; Parameters: "install GymManagerBackupMana
 Filename: "{app}\nssm\win64\nssm.exe"; Parameters: "start GymManagerBackend"; Flags: waituntilterminated; 
 Filename: "{app}\nssm\win64\nssm.exe"; Parameters: "start GymManagerAccessControlServer"; Flags: waituntilterminated; 
 Filename: "{app}\nssm\win64\nssm.exe"; Parameters: "start GymManagerBackupManager"; Flags: waituntilterminated; 
+
+;Avvia Gym Manager
+Filename: "{app}\gym_manager.exe"; Flags: postinstall nowait
 
 [UninstallRun]
 ;Stoppa ed elimina i servizi
