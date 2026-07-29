@@ -27,6 +27,7 @@ begin
   ShellExec('', 'cmd.exe', '/c sc delete GymManagerBackupManager', '', SW_HIDE, ewWaitUntilTerminated, ResultCode); 
   
   ShellExec('', 'taskkill.exe', '/f /im gym_manager.exe', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
+  ShellExec('', 'taskkill.exe', '/f /im live_monitor.exe', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
 end;
 
 
@@ -113,3 +114,4 @@ Filename: "{cmd}"; Parameters: "/c sc delete GymManagerBackend"; Flags: runhidde
 Filename: "{cmd}"; Parameters: "/c sc delete GymManagerAccessControlServer"; Flags: runhidden waituntilterminated; 
 Filename: "{cmd}"; Parameters: "/c sc delete GymManagerBackupManager"; Flags: runhidden waituntilterminated; 
 Filename: "taskkill"; Parameters: "/f /im gym_manager.exe"; Flags: runhidden waituntilterminated
+Filename: "taskkill"; Parameters: "/f /im live_monitor.exe"; Flags: runhidden waituntilterminated
