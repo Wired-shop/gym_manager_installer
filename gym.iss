@@ -1,5 +1,5 @@
 #define MyAppName "Gym Manager"
-#define MyAppVersion "2.5.2"
+#define MyAppVersion "2.7.5"
 #define MyAppPublisher "Wired-Shop"
 #define MyAppURL "https://wired-shop.com/"
 #define MyAppExeName "GymManager-Setup.exe"
@@ -68,8 +68,6 @@ Source: "nssm\*"; DestDir: "{app}\nssm"; Flags: ignoreversion recursesubdirs cre
 Source: "backend\*"; DestDir: "{app}\backend"; Flags: ignoreversion
 Source: "backup_manager\*"; DestDir: "{app}\backup_manager"; Flags: ignoreversion
 Source: "access_control_server\access_control_server.exe"; DestDir: "{app}\access_control_server"; Flags: ignoreversion
-Source: "whatsapp_sender_api\api\*"; DestDir: "{app}\whatsapp_sender_api\api"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "whatsapp_sender_api\updater\*"; DestDir: "{app}\whatsapp_sender_api\updater"; Flags: ignoreversion recursesubdirs createallsubdirs
 
 [Registry]
 Root: HKA; Subkey: "Software\Classes\{#MyAppAssocExt}\OpenWithProgids"; ValueType: string; ValueName: "{#MyAppAssocKey}"; ValueData: ""; Flags: uninsdeletevalue
